@@ -37,7 +37,6 @@ public class MessageService {
 
     public List<UserMessage> select(String userId, String start, String end, String searchWord, String likeSearch) {
         final int LIMIT_NUM = 1000;
-
         Connection connection = null;
         try {
             connection = getConnection();
@@ -46,6 +45,7 @@ public class MessageService {
             if(!StringUtils.isEmpty(userId)) {
               id = Integer.parseInt(userId);
             }
+
 
             //絞り込み(startが入力されていたら)
             if(!StringUtils.isBlank(start)) {

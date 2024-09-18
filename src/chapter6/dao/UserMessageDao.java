@@ -16,6 +16,7 @@ import chapter6.exception.SQLRuntimeException;
 
 public class UserMessageDao {
 
+
 	public List<UserMessage> select(Connection connection, Integer userId, String start, String end, String searchWord, String likeSearch, int num ) {
 
         PreparedStatement ps = null;
@@ -47,16 +48,21 @@ public class UserMessageDao {
             ps.setString(1, start);
             ps.setString(2, end);
 
-            if(userId != null) {
-            	ps.setInt(3, userId);
-            	if (!StringUtils.isBlank(searchWord)) {
+			if(userId != null) {
+				ps.setInt(3, userId);
+
+				if (!StringUtils.isBlank(searchWord)) {
+	   				ps.setString(4, "%" + searchWord + "%");
+    				ps.setString(4, searchWord + "%");
     				ps.setString(4, searchWord);
-    			}
-    		} else {
-    			if (!StringUtils.isBlank(searchWord)) {
+				}
+			} else {
+				if (!StringUtils.isBlank(searchWord)) {
+    				ps.setString(3, "%" + searchWord + "%");
+    				ps.setString(3, searchWord + "%");
     				ps.setString(3, searchWord);
-    			}
-    		}
+				}
+			}
 
             ResultSet rs = ps.executeQuery();
 
